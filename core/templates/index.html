@@ -64,9 +64,51 @@
                 </ul>
             </div>
             {% endif %}
+            <div class="my-5"></div>
+            <h2>Overview</h2>
+            <section id="mymap" style="background-color: #F6F6F6; padding: 40px">
+
+                <!-- map placeholder -->
+
+                <!--The div element for the map -->
+                <div id="map" style="height: 500px"></div>
+                <script>
+                    // Initialize and add the map
+                    function initMap() {
+                        // The location of marker
+                        var place = { lat: 39.94, lng: -75.1954 };
+                        var pennplace = { lat: 39.953885, lng: -75.193048 }
+                        // The map, centered at the marker
+                        var map = new google.maps.Map(
+                            document.getElementById('map'), { zoom: 10, center: place });
+                        // The marker positioned
+                        var marker = new google.maps.Marker({ position: place, map: map });
+                        var marker2 = new google.maps.Marker({ position: pennplace, map: map });
+                    }
+                </script>
+                <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx93sGIbD92ACbDX3yCxjvE8sBIjQkUHo&callback=initMap">
+                    </script>
+            </section>
 
 
-            <!-- Donot/Seeker App -->
+            <script>
+                var map = new GMaps({
+                    el: '#map',
+                    lat: 40.730610,
+                    lng: -73.935242
+                });
+
+                map.addMarker({
+                    lat: 40.700610,
+                    lng: -73.997242,
+                    title: 'New York'
+                });
+
+                map.setZoom(8);
+            </script>
+
+            <!-- Donot/Seeker Form -->
             <form id="application" name="application" class="mx-auto m-5" method="post">
                 {% csrf_token %}
                 {% if not loggedin %}
@@ -157,7 +199,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyUsJyxmM7bTs_ybwkYUbuUOs69tPytU8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.js"></script>
     </body>
 
 </html>
