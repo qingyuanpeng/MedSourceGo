@@ -8,17 +8,27 @@ from django.shortcuts import render, redirect
 def index(request):
     # create user
     if request.method == "POST":
-        user = User.objects.create_user(
-            username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
-        # create additional info in profile
-        user.profile.userType = request.POST['userType']
-        user.profile.supplyType = request.POST['supplyType']
-        user.profile.supplyNumber = request.POST['supplyNumber']
-        user.profile.addr = request.POST['address']
-        user.profile.tel = request.POST['tel']
-
-        login(request, user)
-    return render(request, 'index.html', {})
+        if str(request.user) == "AnonymousUser":
+            user = User.objects.create_user(
+                username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
+            # create additional info in profile
+            user.profile.userType = request.POST['userType']
+            user.profile.supplyType = request.POST['supplyType']
+            user.profile.supplyNumber = request.POST['supplyNumber']
+            user.profile.addr = request.POST['address']
+            user.profile.tel = request.POST['tel']
+            login(request, user)
+            return render(request, 'index.html', {"user": request.user, "loggedin": False})
+        else:
+            user = request.user
+            user.profile.userType = request.POST['userType']
+            user.profile.supplyType = request.POST['supplyType']
+            user.profile.supplyNumber = request.POST['supplyNumber']
+            return render(request, 'index.html', {"user": request.user, "loggedin": True})
+    if str(request.user) == "AnonymousUser":
+        return render(request, 'index.html', {"user": request.user, "loggedin": False})
+    else:
+        return render(request, 'index.html', {"user": request.user, "loggedin": True})
 
 
 def home(request):
@@ -47,7 +57,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("/login")
+    return redirect("/")
 
 
 def signup_view(request):
