@@ -9,6 +9,8 @@ def index(request):
     # create user
     if request.method == "POST":
         if str(request.user) == "AnonymousUser":
+            if User.objects.filter(username=request.POST['username']).exists():
+                return render(request, 'index.html', {"user": request.user, "loggedin": False, "unique": False})
             user = User.objects.create_user(
                 username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
             # create additional info in profile
@@ -18,17 +20,17 @@ def index(request):
             user.profile.addr = request.POST['address']
             user.profile.tel = request.POST['tel']
             login(request, user)
-            return render(request, 'index.html', {"user": request.user, "loggedin": False})
+            return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True})
         else:
             user = request.user
             user.profile.userType = request.POST['userType']
             user.profile.supplyType = request.POST['supplyType']
             user.profile.supplyNumber = request.POST['supplyNumber']
-            return render(request, 'index.html', {"user": request.user, "loggedin": True})
+            return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True})
     if str(request.user) == "AnonymousUser":
-        return render(request, 'index.html', {"user": request.user, "loggedin": False})
+        return render(request, 'index.html', {"user": request.user, "loggedin": False, "unique": True})
     else:
-        return render(request, 'index.html', {"user": request.user, "loggedin": True})
+        return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True})
 
 
 def home(request):

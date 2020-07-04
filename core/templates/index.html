@@ -50,8 +50,7 @@
                 <br>
                 We can help!
             </p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-
+            <a class="btn btn-primary btn-lg" href="#application" role="button">Submit a supply form</a>
             <!-- Test -->
             {% if loggedin %}
             <div class="mt-5">
@@ -65,12 +64,15 @@
                 </ul>
             </div>
             {% endif %}
+
+
             <!-- Donot/Seeker App -->
-            <form name="registration" class="mx-auto m-5" method="post">
+            <form id="application" name="application" class="mx-auto m-5" method="post">
                 {% csrf_token %}
                 {% if not loggedin %}
                 <div class="form-group">
-                    <h2>I'm a ...</h2>
+                    <h2>Submit a Supply Form</h2>
+                    <h5>I'm a ...</h5>
                     <select class="custom-select mr-sm-2" id="userType" name="userType">
                         <option selected>Choose User Type</option>
                         <option value="donor">Donor</option>
@@ -79,8 +81,13 @@
                 </div>
                 <div class="form-group">
                     <label>Username</label>
+                    {% if unique %}
                     <input name="username" class="form-control" placeholder="Enter username">
-                    <small id="usernameHelp" class="form-text text-muted">This will be used for registeration</small>
+                    <small id="usernameHelp" class="form-text text-muted">Username need to be unique, will be used for login</small>
+                    {% else %}
+                    <input name="username" class="form-control is-invalid" placeholder="Enter username">
+                    <small id="username" class="text-danger">Username is already taken.</small>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     <label>Password</label>
@@ -150,6 +157,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyUsJyxmM7bTs_ybwkYUbuUOs69tPytU8"></script>
     </body>
 
 </html>
