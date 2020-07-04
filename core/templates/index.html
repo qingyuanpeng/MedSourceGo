@@ -74,32 +74,32 @@
                     <h2>Submit a Supply Form</h2>
                     <h5>I'm a ...</h5>
                     <select class="custom-select mr-sm-2" id="userType" name="userType">
-                        <option selected>Choose User Type</option>
-                        <option value="donor">Donor</option>
-                        <option value="seeker">Seeker</option>
+                        <option selected value="N/A">Choose User Type</option>
+                        <option value="Donor">Donor</option>
+                        <option value="Seeker">Seeker</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Username</label>
                     {% if unique %}
-                    <input name="username" class="form-control" placeholder="Enter username">
+                    <input required="true" name="username" class="form-control" placeholder="Enter username">
                     <small id="usernameHelp" class="form-text text-muted">Username need to be unique, will be used for login</small>
                     {% else %}
-                    <input name="username" class="form-control is-invalid" placeholder="Enter username">
+                    <input required="true" name="username" class="form-control is-invalid" placeholder="Enter username">
                     <small id="username" class="text-danger">Username is already taken.</small>
                     {% endif %}
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input name="password" type="password" class="form-control" placeholder="Password">
+                    <input required="true" name="password" type="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input required="true" name="address" class="form-control" aria-describedby="address" placeholder="Enter address">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input name="address" class="form-control" aria-describedby="address" placeholder="Enter address">
                 </div>
                 <div class="form-group">
                     <label>Phone number</label>
