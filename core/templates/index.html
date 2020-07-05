@@ -164,27 +164,27 @@
 
             <!-- user status -->
             {% if loggedin %}
-            <div class="mx-auto mm-5 py-5" id="about" style="text-align: center; width: 70%">
+            <div class="mx-auto mm-5 py-5" id="userInfo" style="text-align: center; width: 70%">
                 <div class="card-header">
                     You are logged in as: <em>{{user}}</em>
                     <a href="/signout"> <u>logout</u></a>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item bg-white">User Type: {{ user.profile.userType }}</li>
-                    <li class="list-group-item bg-white">Supply Type: {{ user.profile.supplyType }}</li>
-                    <li class="list-group-item bg-white">Supply Number: {{ user.profile.supplyNumber }}</li>
+                    <a class="list-group-item bg-white text-dark" href="#modifyType" id="modifyType">User Type: {{ user.profile.userType }}</a>
+                    <a class="list-group-item bg-white text-dark" href="#modifySupply" id="modifySupply">Supply Type: {{ user.profile.supplyType }}</a>
+                    <a class="list-group-item bg-white text-dark" href="#modifySupply">Supply Number: {{ user.profile.supplyNumber }}</a>
                     <li class="list-group-item bg-light">Address: {{ user.profile.addr }}</li>
-                    <li class="list-group-item bg-light">Tel: {{ user.profile.tel }}</li>
+                    <li class="list-group-item bg-light" id="modifySupply">Tel: {{ user.profile.tel }}</li>
                 </ul>
             </div>
             <div class="form-group">
-                <h4 class="my-3">Change User Type</h4>
+                <h4 class="mt-3 lead">Change User Type</h4>
                 <select class="custom-select mr-sm-2" id="userType" name="userType">
                     <option selected value={{user.profile.userType}}>Choose User Type</option>
                     <option value="donor">Donor</option>
                     <option value="seeker">Seeker</option>
                 </select>
-                <h4 class="mt-5">Change Supply Type/Amount</h4>
+                <h4 class="mt-5 lead">Change Supply Type/Amount</h4>
                 <a href="/signout">
                     <p>Fill another form to donate/seek different supplies</p>
                 </a>
@@ -212,13 +212,13 @@
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">I want to be anonymous</label>
                 </div> -->
-            <button type="submit" class="btn btn-primary my-4">Submit</button>
+            <a type="submit" class="btn btn-primary my-4" href="#userInfo">Submit</a>
         </form>
 
         <!-- footers -->
-        <div class="mx-auto mm-5 py-5" id="about" style="text-align: center; width: 70%">
-            <h1 id="aboutUs" class="display-4">About Us</h1>
-            <hr class="mb-4">
+        <div class="mx-auto my-5 py-5" id="about" style="text-align: center; width: 70%">
+            <h2 id="aboutUs" class="lead">About Us</h2>
+            <hr class="mb-4" style="width: 50%">
 
             <ul style="list-style-type:none; text-align: center">
                 <h2 class="lead">Estee Chen </h2>
@@ -236,7 +236,7 @@
                 <h2 class="lead">Qingyuan Peng</h2>
                 <li>Project Manager</li>
                 <li>Back-end Programmer</li>
-                <li>University of Pennsylvania CS '22</li>
+                <li>University of Pennsylvania DMD'22</li>
             </ul>
         </div>
         <br><br><br>
