@@ -42,54 +42,65 @@
             </div>
         </nav>
 
-        <div class="jumbotron">
-            <h1 class="display-4">MedSourceGo</h1>
-            <p class="lead">Emergency Medical Resources Seeker</p>
-            <hr class="my-4">
+        <div class="jumbotron float-md-center mx-auto" style="text-align:center;">
+            <h1 class="display-3" style="text-align:center;">MedSourceGo</h1>
+            <p class="lead" style="text-align:center;">Emergency Medical Resources Seeker</p>
+            <hr class="my-4" style="text-align:center;">
             <p>Do you have trouble finding masks or other things for coronavirus virus?
                 <br>
                 We can help!
+                <br>
+                {%if loggedin%}
+                <a class="btn btn-primary btn mt-4" href="#application" role="button">Modify Supply</a>
+                {%else%}
+                <a class="btn btn-primary btn-lg mt-4" href="#application" role="button">I'm In!</a>
+            <div class="text-muted">Already Registered?<a href="/login"> <u>Login</u></a></div>
+            {%endif%}
             </p>
-            <a class="btn btn-primary btn-lg" href="#application" role="button">Submit a supply form</a>
-            <!-- Test -->
+
+            <!-- user status -->
             {% if loggedin %}
-            <div class="mt-5">
-                <p>You are logged in as: {{ user }}</p>
-                <ul>
-                    <li>user type: {{ user.profile.userType }}</li>
-                    <li>supply type: {{ user.profile.supplyType }}</li>
-                    <li>supply number: {{ user.profile.supplyNumber }}</li>
-                    <li>address: {{ user.profile.addr }}</li>
-                    <li>tel: {{ user.profile.tel }}</li>
+            <div class="card my-5" style="width: 30rem;">
+                <div class="card-header">
+                    You are logged in as: {{user}}
+                    <a href="/signout"> <u>logout</u></a>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">User Type: {{ user.profile.userType }}</li>
+                    <li class="list-group-item">Supply Type: {{ user.profile.supplyType }}</li>
+                    <li class="list-group-item">Supply Number: {{ user.profile.supplyNumber }}</li>
+                    <li class="list-group-item">Address: {{ user.profile.addr }}</li>
+                    <li class="list-group-item">Tel: {{ user.profile.tel }}</li>
                 </ul>
             </div>
             {% endif %}
-            <div class="my-5"></div>
-            <h2>Overview</h2>
-            <section id="mymap" style="background-color: #F6F6F6; padding: 40px">
 
-                <!-- map placeholder -->
 
-                <!--The div element for the map -->
-                <div id="map" style="height: 500px"></div>
-                <script>
-                    // Initialize and add the map
-                    function initMap() {
-                        // The location of marker
-                        var place = { lat: 39.94, lng: -75.1954 };
-                        var pennplace = { lat: 39.953885, lng: -75.193048 }
-                        // The map, centered at the marker
-                        var map = new google.maps.Map(
-                            document.getElementById('map'), { zoom: 10, center: place });
-                        // The marker positioned
-                        var marker = new google.maps.Marker({ position: place, map: map });
-                        var marker2 = new google.maps.Marker({ position: pennplace, map: map });
-                    }
-                </script>
-                <script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx93sGIbD92ACbDX3yCxjvE8sBIjQkUHo&callback=initMap">
+            <div class="my-5 mx-auto">
+                <h2 class="display-4 mt-4 mx-auto" style="text-align:center;">Overview</h2>
+                <hr class="my-4">
+                <section id=" mymap" style="background-color: #F6F6F6; padding: 40px">
+                    <!--The div element for the map -->
+                    <div id="map" style="height: 500px"></div>
+                    <script>
+                        // Initialize and add the map
+                        function initMap() {
+                            // The location of marker
+                            var place = { lat: 39.94, lng: -75.1954 };
+                            var pennplace = { lat: 39.953885, lng: -75.193048 }
+                            // The map, centered at the marker
+                            var map = new google.maps.Map(
+                                document.getElementById('map'), { zoom: 10, center: place });
+                            // The marker positioned
+                            var marker = new google.maps.Marker({ position: place, map: map });
+                            var marker2 = new google.maps.Marker({ position: pennplace, map: map });
+                        }
                     </script>
-            </section>
+                    <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx93sGIbD92ACbDX3yCxjvE8sBIjQkUHo&callback=initMap">
+                        </script>
+                </section>
+            </div>
 
 
             <script>
@@ -109,17 +120,25 @@
             </script>
 
             <!-- Donot/Seeker Form -->
-            <form id="application" name="application" class="mx-auto m-5" method="post">
+            <form id="application" name="application" class="mx-auto" style="width: fit-content; text-align:left;" method="post">
                 {% csrf_token %}
                 {% if not loggedin %}
+
                 <div class="form-group">
-                    <h2>Submit a Supply Form</h2>
-                    <h5>I'm a ...</h5>
-                    <select class="custom-select mr-sm-2" id="userType" name="userType">
-                        <option selected value="N/A">Choose User Type</option>
-                        <option value="Donor">Donor</option>
-                        <option value="Seeker">Seeker</option>
-                    </select>
+                    <h2 class="display-4 mt-5">Sign Up & Log Supplies</h2>
+                    <hr class="mb-4">
+                    <div class="row">
+                        <div class="col-md-auto">
+                            <h5 class="lead">I'm a ...</h5>
+                        </div>
+                        <div class="col-md-5">
+                            <select class="custom-select mr-sm-2" id="userType" name="userType">
+                                <option selected value="N/A">Choose User Type</option>
+                                <option value="Donor">Donor</option>
+                                <option value="Seeker">Seeker</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Username</label>

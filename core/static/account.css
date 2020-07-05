@@ -1,10 +1,11 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Verdana, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-size: 100%;
   background-repeat: repeat;
   background-position: center 0%;
+  background-color: #dadada;
 }
 
 .box {
@@ -14,16 +15,15 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #cfe4ffbd;
+  background: #8ea7c9bd;
   text-align: center;
   border-radius: 24px;
 }
 .box h1 {
   color: #05316bbd;
   text-transform: uppercase;
-  font-weight: 50;
-  /* font-family: 'Raleway', sans-serif; */
-  font-family: "Megrim", cursive;
+  font-weight: 300;
+  font-family: "Raleway", sans-serif;
   font-size: xx-large;
 }
 .box input[type="text"],
@@ -34,7 +34,7 @@ body {
   margin: 20px auto;
   text-align: center;
   font: sans-serif;
-  border: 2px solid #75bcff;
+  border: 2px solid #123555;
   padding: 14px 10px;
   width: 200px;
   outline: none;
@@ -45,7 +45,7 @@ body {
 .box input[type="text"]:focus,
 .box input[type="password"] {
   width: 280px;
-  border-color: #75bcff;
+  border-color: #123555;
 }
 .box input[type="submit"] {
   border: 0;
@@ -54,18 +54,18 @@ body {
   margin: 20px auto;
   text-align: center;
   font: sans-serif;
-  border: 2px solid #0c8aff;
+  border: 2px solid #075fb1;
   padding: 14px 10px;
   width: 150px;
   outline: none;
-  color: #01264dd0;
+  color: #002446;
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
 }
 
 .box input[type="submit"]:hover {
-  background: #007bffd0;
+  background: #89abca;
 }
 
 .box input[type="button"] {
@@ -75,22 +75,22 @@ body {
   margin: 20px auto;
   text-align: center;
   font: sans-serif;
-  border: 2px solid #75bcff;
+  border: 2px solid #075fb1;
   padding: 14px 10px;
   width: 200px;
   outline: none;
-  color: #1e4870;
+  color: #075fb1;
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
 }
 
 a[type="redirect"] {
-  color: #75bcff;
+  color: #123555;
   font-size: small;
 }
 
 p[type="incorrect"] {
-  color: #75bcff;
+  color: #123555;
   font-size: small;
 }
