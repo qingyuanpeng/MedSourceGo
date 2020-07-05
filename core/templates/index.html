@@ -57,156 +57,192 @@
             <div class="text-muted">Already Registered?<a href="/login"> <u>Login</u></a></div>
             {%endif%}
             </p>
+        </div>
 
-            <!-- user status -->
-            {% if loggedin %}
-            <div class="card my-5" style="width: 30rem;">
-                <div class="card-header">
-                    You are logged in as: {{user}}
-                    <a href="/signout"> <u>logout</u></a>
+        <!-- user status -->
+        {% if loggedin %}
+        <div class="card my-5" style="width: 30rem;">
+            <div class="card-header">
+                You are logged in as: {{user}}
+                <a href="/signout"> <u>logout</u></a>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">User Type: {{ user.profile.userType }}</li>
+                <li class="list-group-item">Supply Type: {{ user.profile.supplyType }}</li>
+                <li class="list-group-item">Supply Number: {{ user.profile.supplyNumber }}</li>
+                <li class="list-group-item">Address: {{ user.profile.addr }}</li>
+                <li class="list-group-item">Tel: {{ user.profile.tel }}</li>
+            </ul>
+        </div>
+        {% endif %}
+
+
+        <div class="my-5 mx-auto">
+            <h2 class="display-4 mt-4 mx-auto" style="text-align:center;">Overview</h2>
+            <hr class="my-4" style="width:80%;">
+            <p class="lead" style="text-align: center"> <a href="https://www.cdc.gov/coronavirus/index.html">
+                    What is coronavirus virus? </a>
+                <br>
+                <strong>Challenge</strong>: Supplies and demands are disrupted
+                <!-- <a herf="https://www.cnbc.com/2020/05/01/coronavirus-disrupts-supply-demand-farmers-throw-flowers-milk-fruit.html">learn more</a> -->
+                <br>
+                <strong>Our Solution</strong>: a platform for people to find or donate supplies
+            </p>
+
+            <section id=" mymap" style="background-color: #F6F6F6; padding: 40px">
+                <!--The div element for the map -->
+                <div id="map" style="height: 500px"></div>
+                <script>
+                    // Initialize and add the map
+                    function initMap() {
+                        // The location of marker
+                        var place = { lat: 39.94, lng: -75.1954 };
+                        var pennplace = { lat: 39.953885, lng: -75.193048 }
+                        // The map, centered at the marker
+                        var map = new google.maps.Map(
+                            document.getElementById('map'), { zoom: 10, center: place });
+                        // The marker positioned
+                        var marker = new google.maps.Marker({ position: place, map: map });
+                        var marker2 = new google.maps.Marker({ position: pennplace, map: map });
+                    }
+                </script>
+                <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx93sGIbD92ACbDX3yCxjvE8sBIjQkUHo&callback=initMap">
+                    </script>
+            </section>
+        </div>
+
+
+        <script>
+            var map = new GMaps({
+                el: '#map',
+                lat: 40.730610,
+                lng: -73.935242
+            });
+
+            map.addMarker({
+                lat: 40.700610,
+                lng: -73.997242,
+                title: 'New York'
+            });
+
+            map.setZoom(8);
+        </script>
+
+        <!-- Donot/Seeker Form -->
+        <form id="application" name="application" class="mx-auto" style="width: 70%; text-align:left;" method="post">
+            {% csrf_token %}
+            {% if not loggedin %}
+
+            <div class="form-group">
+                <h2 class="display-4 mt-5" style="text-align:center;">Log Supplies</h2>
+                <hr class="mb-4">
+                <div class="row">
+                    <div class="col-md-auto">
+                        <h5 class="lead">I'm a ...</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <select class="custom-select mr-sm-2" id="userType" name="userType">
+                            <option selected value="N/A">Choose User Type</option>
+                            <option value="Donor">Donor</option>
+                            <option value="Seeker">Seeker</option>
+                        </select>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">User Type: {{ user.profile.userType }}</li>
-                    <li class="list-group-item">Supply Type: {{ user.profile.supplyType }}</li>
-                    <li class="list-group-item">Supply Number: {{ user.profile.supplyNumber }}</li>
-                    <li class="list-group-item">Address: {{ user.profile.addr }}</li>
-                    <li class="list-group-item">Tel: {{ user.profile.tel }}</li>
-                </ul>
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                {% if unique %}
+                <input required="true" name="username" class="form-control" placeholder="Enter username">
+                <small id="usernameHelp" class="form-text text-muted">Username need to be unique, will be used for login</small>
+                {% else %}
+                <input required="true" name="username" class="form-control is-invalid" placeholder="Enter username">
+                <small id="username" class="text-danger">Username is already taken.</small>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input required="true" name="password" type="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <input required="true" name="address" class="form-control" aria-describedby="address" placeholder="Enter address">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label>Phone number</label>
+                <input name="tel" class="form-control" aria-describedby="tel" placeholder="Enter your phone number">
             </div>
             {% endif %}
 
-
-            <div class="my-5 mx-auto">
-                <h2 class="display-4 mt-4 mx-auto" style="text-align:center;">Overview</h2>
-                <hr class="my-4">
-                <section id=" mymap" style="background-color: #F6F6F6; padding: 40px">
-                    <!--The div element for the map -->
-                    <div id="map" style="height: 500px"></div>
-                    <script>
-                        // Initialize and add the map
-                        function initMap() {
-                            // The location of marker
-                            var place = { lat: 39.94, lng: -75.1954 };
-                            var pennplace = { lat: 39.953885, lng: -75.193048 }
-                            // The map, centered at the marker
-                            var map = new google.maps.Map(
-                                document.getElementById('map'), { zoom: 10, center: place });
-                            // The marker positioned
-                            var marker = new google.maps.Marker({ position: place, map: map });
-                            var marker2 = new google.maps.Marker({ position: pennplace, map: map });
-                        }
-                    </script>
-                    <script async defer
-                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx93sGIbD92ACbDX3yCxjvE8sBIjQkUHo&callback=initMap">
-                        </script>
-                </section>
-            </div>
-
-
-            <script>
-                var map = new GMaps({
-                    el: '#map',
-                    lat: 40.730610,
-                    lng: -73.935242
-                });
-
-                map.addMarker({
-                    lat: 40.700610,
-                    lng: -73.997242,
-                    title: 'New York'
-                });
-
-                map.setZoom(8);
-            </script>
-
-            <!-- Donot/Seeker Form -->
-            <form id="application" name="application" class="mx-auto" style="width: fit-content; text-align:left;" method="post">
-                {% csrf_token %}
-                {% if not loggedin %}
-
-                <div class="form-group">
-                    <h2 class="display-4 mt-5">Sign Up & Log Supplies</h2>
-                    <hr class="mb-4">
-                    <div class="row">
-                        <div class="col-md-auto">
-                            <h5 class="lead">I'm a ...</h5>
-                        </div>
-                        <div class="col-md-5">
-                            <select class="custom-select mr-sm-2" id="userType" name="userType">
-                                <option selected value="N/A">Choose User Type</option>
-                                <option value="Donor">Donor</option>
-                                <option value="Seeker">Seeker</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Username</label>
-                    {% if unique %}
-                    <input required="true" name="username" class="form-control" placeholder="Enter username">
-                    <small id="usernameHelp" class="form-text text-muted">Username need to be unique, will be used for login</small>
-                    {% else %}
-                    <input required="true" name="username" class="form-control is-invalid" placeholder="Enter username">
-                    <small id="username" class="text-danger">Username is already taken.</small>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input required="true" name="password" type="password" class="form-control" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input required="true" name="address" class="form-control" aria-describedby="address" placeholder="Enter address">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label>Phone number</label>
-                    <input name="tel" class="form-control" aria-describedby="tel" placeholder="Enter your phone number">
-                </div>
+            <div class="form-group">
+                {% if loggedin %}
+                <h4 class="my-3">Change user type</h4>
+                <select class="custom-select mr-sm-2" id="userType" name="userType">
+                    <option selected value={{user.profile.userType}}>Choose User Type</option>
+                    <option value="donor">Donor</option>
+                    <option value="seeker">Seeker</option>
+                </select>
+                <h4 class="mt-5">Change your supply type/number</h4>
+                <a href="/signout">
+                    <p>Fill another form to donate/seek different supplies</p>
+                </a>
                 {% endif %}
-
-                <div class="form-group">
-                    {% if loggedin %}
-                    <h4 class="my-3">Change user type</h4>
-                    <select class="custom-select mr-sm-2" id="userType" name="userType">
-                        <option selected value={{user.profile.userType}}>Choose User Type</option>
-                        <option value="donor">Donor</option>
-                        <option value="seeker">Seeker</option>
-                    </select>
-                    <h4 class="mt-5">Change your supply type/number</h4>
-                    <a href="/signout">
-                        <p>Fill another form to donate/seek different supplies</p>
-                    </a>
-                    {% endif %}
-                    <div class="form-row">
-                        <div class="col-7">
-                            <label for="supplyType">Supply Type</label>
-                            <select id="supplyType" name="supplyType" class="form-control">
-                                <option selected value={{user.profile.supplyType}}>Choose Supply Type</option>
-                                <option>Masks</option>
-                                <option>Toilet Paper</option>
-                                <option>First-Aid Kit</option>
-                                <option>Respirator</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label for="supplyNumber">How Many</label>
-                            <input name="supplyNumber" class="form-control" placeholder="# of supplies" value={{user.profile.supplyNumber}}>
-                        </div>
+                <div class="form-row">
+                    <div class="col-7">
+                        <label for="supplyType">Supply Type</label>
+                        <select id="supplyType" name="supplyType" class="form-control">
+                            <option selected value={{user.profile.supplyType}}>Choose Supply Type</option>
+                            <option>Masks</option>
+                            <option>Toilet Paper</option>
+                            <option>First-Aid Kit</option>
+                            <option>Respirator</option>
+                        </select>
                     </div>
-
+                    <div class="col">
+                        <label for="supplyNumber">How Many</label>
+                        <input name="supplyNumber" class="form-control" placeholder="# of supplies" value={{user.profile.supplyNumber}}>
+                    </div>
                 </div>
-                <!-- anonymous check -->
-                <!-- <div class="form-check">
+
+            </div>
+            <!-- anonymous check -->
+            <!-- <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">I want to be anonymous</label>
                 </div> -->
-                <button type="submit" class="btn btn-primary my-4">Submit</button>
-            </form>
+            <button type="submit" class="btn btn-primary my-4">Submit</button>
+        </form>
+
+        <!-- footers -->
+        <div class="mx-auto mm-5 py-5" id="about" style="text-align: center; width: 70%">
+            <h1 class="display-4">About Us</h1>
+            <hr class="mb-4">
+
+            <ul style="list-style-type:none; text-align: center">
+                <h2 class="lead">Estee Chen </h2>
+                <li>Project Manager</li>
+                <li>Front-end Programmer</li>
+                <li>University of Pennsylvania CS '22</li>
+            </ul>
+
+            <ul style="list-style-type:none; text-align: center">
+                <h2 class="lead">Audrey Zheng</h2>
+                <li>Back-end Programmar</li>
+                <li>James Hopkins CS '22</li>
+            </ul>
+            <ul style="list-style-type:none; text-align: center">
+                <h2 class="lead">Qingyuan Peng</h2>
+                <li>Project Manager</li>
+                <li>Back-end Programmer</li>
+                <li>University of Pennsylvania CS '22</li>
+            </ul>
         </div>
+        <br><br><br>
+
 
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
