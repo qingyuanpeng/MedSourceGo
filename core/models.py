@@ -8,7 +8,8 @@ from django.dispatch import receiver
 class Profile(models.Model):
     # user alredy have fields: username, first&last name,
     #email, password, groups, is_superuser, date_joined
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, related_name='profile', on_delete=models.CASCADE)
     uid = models.TextField(max_length=500, blank=True)
     userType = models.TextField(max_length=100, blank=True)
     supplyType = models.TextField(max_length=100, blank=True)
@@ -16,6 +17,9 @@ class Profile(models.Model):
     addr = models.TextField(max_length=500, blank=True)
     tel = models.TextField(max_length=500, blank=True)
     info = models.TextField(max_length=500, blank=True)
+
+    def __str__(self):
+        return self.user.username
 
 # define signals - Profile model will be automatically created/updated when we create/update a User instance.
 @receiver(post_save, sender=User)

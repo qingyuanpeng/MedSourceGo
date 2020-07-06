@@ -20,17 +20,27 @@ def index(request):
             user.profile.addr = request.POST['address']
             user.profile.tel = request.POST['tel']
             login(request, user)
-            return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True})
+            return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True, "allAddr": getAllLocs()})
         else:
             user = request.user
             user.profile.userType = request.POST['userType']
             user.profile.supplyType = request.POST['supplyType']
             user.profile.supplyNumber = request.POST['supplyNumber']
-            return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True})
+            return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True, "allAddr": getAllLocs()})
     if str(request.user) == "AnonymousUser":
-        return render(request, 'index.html', {"user": request.user, "loggedin": False, "unique": True})
+        return render(request, 'index.html', {"user": request.user, "loggedin": False, "unique": True, "allAddr": []})
     else:
-        return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True})
+        allAddr = []
+        for currUser in User.objects.all():
+            allAddr.append(currUser.profile.addr)
+        return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True, "allAddr": getAllLocs()})
+
+
+def getAllLocs():
+    allAddr = []
+    for currUser in User.objects.all():
+        allAddr.append(currUser.profile.addr)
+    return allAddr
 
 
 def home(request):

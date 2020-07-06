@@ -63,6 +63,10 @@
         </div>
 
 
+        {% for addr in allAddr %}
+        <p>{{addr}}</p>
+        {% endfor %}
+
         <div class="my-5 mx-auto">
             <h2 class="display-4 mt-4 mx-auto" style="text-align:center;">Overview</h2>
             <hr class="my-4" style="width:80%;">
@@ -88,8 +92,29 @@
                         var map = new google.maps.Map(
                             document.getElementById('map'), { zoom: 10, center: place });
                         // The marker positioned
-                        var marker = new google.maps.Marker({ position: place, map: map });
+                        var allAddress = "{{allAddr}}";
+                        for (let addr of allAddress) {
+                            codeAddress(geocoder, map, addr);
+                        }
+                        print('test!');
+                        var marker1 = new google.maps.Marker({ position: place, map: map });
                         var marker2 = new google.maps.Marker({ position: pennplace, map: map });
+                    }
+
+                    function codeAddress(geocoder, map, address) {
+                        geocoder.geocode({ 'address': address }, function (results, status) {
+                            if (status === 'OK') {
+                                //map.setCenter(results[0].geometry.location);
+                                var marker = new google.maps.Marker({
+                                    map: map,
+                                    label: address,
+                                    position: results[0].geometry.location
+                                });
+                                print('success!');
+                            } else {
+                                print('Geocode was not successful for the following reason: ' + status);
+                            }
+                        });
                     }
                 </script>
                 <script async defer
@@ -163,7 +188,6 @@
                 <input name="tel" class="form-control" aria-describedby="tel" placeholder="Enter your phone number">
             </div>
             {% endif %}
-
 
             <!-- user status -->
             {% if loggedin %}
