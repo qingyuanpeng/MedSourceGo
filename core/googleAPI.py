@@ -1,45 +1,50 @@
 import urllib.request
 import json
 
+
 def getDistance(origin, destination):
     endpoint = 'https://maps.googleapis.com/maps/api/directions/json?'
-    apiKey = 'AIzaSyDZ3NzuWjs0Q-MB8xB7h4EzaSOFlQvIThQ'
-    origin = origin.replace(' ','+')
-    destination = destination.replace(' ','+')
-    navRequest = 'origin={}&destination={}&key={}'.format(origin,destination,apiKey)
+    apiKey = 'AIzaSyDx93sGIbD92ACbDX3yCxjvE8sBIjQkUHo'
+    origin = origin.replace(' ', '+')
+    destination = destination.replace(' ', '+')
+    navRequest = 'origin={}&destination={}&key={}'.format(
+        origin, destination, apiKey)
     request = endpoint + navRequest
     response = urllib.request.urlopen(request).read()
     directions = json.loads(response)
     routes = directions['routes']
-    if len(routes)<0:
+    if len(routes) < 0:
         return "no valid route"
     legs = routes[0]['legs']
     distStr = legs[0]['distance']['text']
     return convertDist(distStr)
 
-#convert string distance to double
+# convert string distance to double
+
+
 def convertDist(distString):
-    #replace all commas
+    # replace all commas
     distString = distString.replace(",", "")
-    #find index of space before unit
+    # find index of space before unit
     index = distString.find(" ", 0, len(distString))
-    
+
     return float(distString[:index])
 
 
 def getCoord(addr):
     endpoint = 'https://maps.googleapis.com/maps/api/directions/json?'
     apiKey = 'AIzaSyDZ3NzuWjs0Q-MB8xB7h4EzaSOFlQvIThQ'
-    addr = addr.replace(' ','+')
-    navRequest = 'origin={}&destination={}&key={}'.format(addr,addr,apiKey)
+    addr = addr.replace(' ', '+')
+    navRequest = 'origin={}&destination={}&key={}'.format(addr, addr, apiKey)
     request = endpoint + navRequest
     response = urllib.request.urlopen(request).read()
     directions = json.loads(response)
     routes = directions['routes']
-    if len(routes)<0:
+    if len(routes) < 0:
         return "no valid route"
     legs = routes[0]['legs']
-    return [legs[0]['start_location']['lat'],legs[0]['start_location']['lng']]
+    return [legs[0]['start_location']['lat'], legs[0]['start_location']['lng']]
+
 
 def test3():
     origin = "3411 Chestnut St, PA"
@@ -48,24 +53,24 @@ def test3():
     print(getDistance(origin, destination2))
     print(getCoord(origin))
 
-#test3()
-
-
 
 def getDistancePrompt():
     endpoint = 'https://maps.googleapis.com/maps/api/directions/json?'
     apiKey = 'AIzaSyDZ3NzuWjs0Q-MB8xB7h4EzaSOFlQvIThQ'
-    origin = input("Where are you right now: ").replace(' ','+')
-    destination = input("Where do you want to go: ").replace(' ','+')
-    navRequest = 'origin={}&destination={}&key={}'.format(origin,destination,apiKey)
+    origin = input("Where are you right now: ").replace(' ', '+')
+    destination = input("Where do you want to go: ").replace(' ', '+')
+    navRequest = 'origin={}&destination={}&key={}'.format(
+        origin, destination, apiKey)
     request = endpoint + navRequest
     response = urllib.request.urlopen(request).read()
     directions = json.loads(response)
     routes = directions['routes']
-    if len(routes)<0:
+    if len(routes) < 0:
         return "no valid route"
     legs = routes[0]['legs']
     distStr = legs[0]['distance']['text']
     print(distStr)
 
-getDistancePrompt()
+
+test3()
+# getDistancePrompt()

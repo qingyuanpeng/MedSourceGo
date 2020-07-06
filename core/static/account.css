@@ -15,15 +15,15 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #8ea7c9bd;
+  background: #dce4f0bd;
   text-align: center;
   border-radius: 24px;
 }
 .box h1 {
   color: #05316bbd;
   text-transform: uppercase;
-  font-weight: 300;
-  font-family: "Raleway", sans-serif;
+  font-weight: 100;
+  font-family: "Helvetica Neue", sans-serif;
   font-size: xx-large;
 }
 .box input[type="text"],

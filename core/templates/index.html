@@ -52,11 +52,14 @@
                 <br>
                 {%if loggedin%}
                 <a class="btn btn-primary btn mt-4" href="#application" role="button">Modify Supply</a>
-                {%else%}
-                <a class="btn btn-primary btn-lg mt-4" href="#application" role="button">I'm In!</a>
-            <div class="text-muted">Already Registered?<a href="/login"> <u>Login</u></a></div>
-            {%endif%}
-            </p>
+                <br>
+                <a href="/signout"> <u>signout</u></a>
+        </div>
+        {%else%}
+        <a class="btn btn-primary btn-lg mt-4" href="#application" role="button">I'm In!</a>
+        <div class="text-muted">Already Registered?<a href="/login"> <u>Login</u></a></div>
+        {%endif%}
+        </p>
         </div>
 
 
@@ -212,7 +215,7 @@
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">I want to be anonymous</label>
                 </div> -->
-            <a type="submit" class="btn btn-primary my-4" href="#userInfo">Submit</a>
+            <button type="submit" class="btn btn-primary my-4">Submit</button>
         </form>
 
         <!-- footers -->
