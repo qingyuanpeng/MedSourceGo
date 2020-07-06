@@ -83,22 +83,30 @@
                 <!--The div element for the map -->
                 <div id="map" style="height: 500px"></div>
                 <script>
+                    var geocoder;
+                    var map;
+                    var allAddress = "{{allAddr}}";
                     // Initialize and add the map
                     function initMap() {
                         // The location of marker
-                        var place = { lat: 39.94, lng: -75.1954 };
+                        var place = { lat: 40.4173, lng: -82.9071 };
                         var pennplace = { lat: 39.953885, lng: -75.193048 }
                         // The map, centered at the marker
                         var map = new google.maps.Map(
-                            document.getElementById('map'), { zoom: 10, center: place });
+                            document.getElementById('map'), { zoom: 3, center: place });
                         // The marker positioned
-                        var allAddress = "{{allAddr}}";
-                        for (let addr of allAddress) {
-                            codeAddress(geocoder, map, addr);
-                        }
-                        print('test!');
+
                         var marker1 = new google.maps.Marker({ position: place, map: map });
                         var marker2 = new google.maps.Marker({ position: pennplace, map: map });
+
+                        geocoder = new google.maps.Geocoder();
+
+                        if (allAddress.size > 0) {
+                            codeAddress(geocoder, map, allAddress[0]);
+                        }
+                        // for (let addr of allAddress) {
+                        //     codeAddress(geocoder, map, addr);
+                        // }
                     }
 
                     function codeAddress(geocoder, map, address) {
@@ -107,12 +115,11 @@
                                 //map.setCenter(results[0].geometry.location);
                                 var marker = new google.maps.Marker({
                                     map: map,
-                                    label: address,
                                     position: results[0].geometry.location
                                 });
-                                print('success!');
+                                alert('success!');
                             } else {
-                                print('Geocode was not successful for the following reason: ' + status);
+                                alert('Geocode was not successful for the following reason: ' + status);
                             }
                         });
                     }

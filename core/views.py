@@ -28,7 +28,7 @@ def index(request):
             user.profile.supplyNumber = request.POST['supplyNumber']
             return render(request, 'index.html', {"user": request.user, "loggedin": True, "unique": True, "allAddr": getAllLocs()})
     if str(request.user) == "AnonymousUser":
-        return render(request, 'index.html', {"user": request.user, "loggedin": False, "unique": True, "allAddr": []})
+        return render(request, 'index.html', {"user": request.user, "loggedin": False, "unique": True, "allAddr": getAllLocs()})
     else:
         allAddr = []
         for currUser in User.objects.all():
