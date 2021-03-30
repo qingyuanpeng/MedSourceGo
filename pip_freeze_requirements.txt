@@ -51,7 +51,7 @@ pickleshare==0.7.5
 prometheus-client==0.7.1
 prompt-toolkit==3.0.5
 pycodestyle==2.5.0
-Pygments==2.6.1
+Pygments==2.7.4
 pylint==2.4.4
 pymagnitude==0.1.120
 pyrsistent==0.16.0
